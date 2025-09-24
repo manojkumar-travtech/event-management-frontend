@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { Path, PathValue } from "react-hook-form";
-import { FormFieldOption } from "../newForm/Formtypes.types";
+import { FormFieldOption } from "../Form/Formtypes.types";
 
 interface FormSelectProps<T> {
   value: PathValue<T, Path<T>> | null | undefined | string;

@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "Event Management",
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

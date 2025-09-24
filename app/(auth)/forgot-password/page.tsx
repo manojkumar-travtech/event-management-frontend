@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
 import React from "react";
+import ValidateEmail from "../_components/ValidateEmail";
+import AuthLayoutComponent from "../_components/AuthLayout";
 
 const ForgotPasswordPage = () => {
   return (
-    <>
-      <Button>Get Events</Button>
-    </>
+    <AuthLayoutComponent title="Forgot password">
+      <ValidateEmail />
+    </AuthLayoutComponent>
+    
   );
 };
 

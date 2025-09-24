@@ -33,7 +33,7 @@ export type FormSize = "sm" | "md" | "lg";
 export type FormVariant = "default" | "outlined" | "filled" | "minimal";
 
 export interface FormFieldOption {
-  value: string | number | boolean;
+  value: string;
   label: string;
   disabled?: boolean;
   description?: string;
@@ -42,8 +42,8 @@ export interface FormFieldOption {
 export interface FormFieldValidation<T = FieldValues> {
   required?: boolean | string;
   pattern?: { value: RegExp; message: string };
-  min?: number | string;
-  max?: number | string;
+  min?: number | string | undefined;
+  max?: number | string | undefined;
   minLength?: number;
   maxLength?: number;
   validate?: (
@@ -82,6 +82,8 @@ export interface FormFieldProps<T extends FieldValues> {
     fieldState: UseFormReturn<T>["formState"];
     field: Omit<FormFieldProps<T>, "render">;
   }) => React.ReactNode;
+  conditional?: ConditionalRule;
+
 }
 
 export interface FormSection<T extends FieldValues> {
@@ -98,12 +100,6 @@ export interface FormConfig<T extends FieldValues> {
   sections?: FormSection<T>[];
   fields?: FormFieldProps<T>[];
   gridCols?: 1 | 2 | 3 | 4 | 6 | 12;
-  enableReset?: boolean;
-  resetButtonText?: string;
-  showProgress?: boolean;
-  saveAsDraft?: boolean;
-  autoSave?: boolean;
-  autoSaveInterval?: number;
   fullWidthButtons?: boolean;
 }
 
@@ -111,7 +107,6 @@ export interface DynamicFormProps<T extends FieldValues> {
   formConfig: FormConfig<T>;
   onSubmit: SubmitHandler<T>;
   onError?: SubmitErrorHandler<T>;
-  onDraftSave?: (data: Partial<T>) => void;
   submitButtonText?: string;
   defaultValues?: Partial<T>;
   layout?: FormLayout;
@@ -121,6 +116,10 @@ export interface DynamicFormProps<T extends FieldValues> {
   showErrors?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  requiredFormLayout?: boolean;
+  externalSubmit?: boolean ; 
+  ref?: React.Ref<DynamicFormRef<T>>
+  onChange?: (values: T) => void
 }
 
 export interface RenderFieldsProps<T extends FieldValues> {
@@ -132,5 +131,18 @@ export interface RenderFieldsProps<T extends FieldValues> {
   size: FormSize;
   variant: FormVariant;
   layout: FormLayout;
-  watchedValues?: any;
+  isMobile:boolean
+  watch?: (field?: string | string[], defaultValue?: any) => any;
 }
+export interface ConditionalRule {
+  field: string;       // the field to watch
+  value: any[];        // the values that trigger showing this field
+}
+export type DynamicFormRef<T extends FieldValues> = {
+  submit: () => Promise<T | false>;
+  validateSection?: (fields: string[]) => Promise<boolean>;
+  getValues: () => T;
+  reset: () => void;
+  trigger?: (name?: string | string[]) => Promise<boolean>;
+  isValid : boolean 
+};

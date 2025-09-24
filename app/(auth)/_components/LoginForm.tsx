@@ -3,11 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import DynamicForm from "@/components/custom/newForm/DynamicForm";
 import { Typography } from "@/components/custom/Typography";
 import Link from "next/link";
 
 import { loginAction } from "../actions/loginAction";
+import { DynamicForm } from "@/components/custom/Form";
 
 const formConfig = {
   title: "",
@@ -19,7 +19,7 @@ const formConfig = {
     {
       fields: [
         {
-          name: "email",
+          name: "loginIdentifier",
           label: "Email Address",
           type: "email",
           placeholder: "Enter Your Email",

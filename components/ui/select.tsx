@@ -48,7 +48,7 @@ function SelectContent({
         data-slot="select-content"
         className={cn(
           "bg-white text-[#344054] rounded border border-[#D0D5DD] shadow-xs overflow-hidden z-50",
-          "focus-visible:outline-none",
+          "focus-visible:outline-none w-full min-w-[var(--radix-select-trigger-width)]",
           className
         )}
         position={position}

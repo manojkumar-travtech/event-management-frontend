@@ -6,22 +6,21 @@ import APIKit, { safeAPICaller } from "@/app/api/axios/apikit";
 type LoginResponse = { success: true } | { error: string };
 
 export async function loginAction(credentials: {
-  email: string;
+  loginIdentifier: string;
   password: string;
 }): Promise<LoginResponse> {
   try {
     const response: any = await safeAPICaller(
-      APIKit.post("/admin/login", credentials)
+      APIKit.post("/login", credentials)
     );
-
     if (!response?.success) {
       // clear cookie if login failed (avoid stale token)
       (await cookies()).delete("access_token");
       return { error: response?.message ?? "Login failed" };
     }
 
-    if (response.token) {
-      (await cookies()).set("access_token", response.token, {
+    if (response?.data?.accessToken) {
+      (await cookies()).set("access_token", response?.data?.accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",

@@ -2,13 +2,13 @@
 import React from "react";
 import { FieldValues } from "react-hook-form";
 import DynamicForm from "./DynamicForm";
+import { FormConfig } from "./Formtypes.types";
 
 export default function DemoFormPage() {
   // formConfig definition
-  const formConfig = {
+  const formConfig:FormConfig<any> = {
     title: "User Registration",
     description: "Fill in the details below to create your account.",
-    showProgress: false,
     fullWidthButtons: true,
     gridCols: 1, // 2-column grid
     sections: [
@@ -79,10 +79,6 @@ export default function DemoFormPage() {
             name: "volume",
             label: "Volume Level",
             type: "range",
-            min: 0,
-            max: 100,
-            step: 5,
-            defaultValue: 50,
           },
           {
             name: "gender",
@@ -139,7 +135,7 @@ export default function DemoFormPage() {
   };
 
   return (
-    <div className="mx-auto py-10">
+    <div className="">
       <DynamicForm
         formConfig={formConfig as any}
         onSubmit={handleSubmit}
